@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
 
-// require('./routes')(app);
+require('./routes')(app);
 app.use('*', (req, res) => (
   res.status(404).json({
     success: false,
