@@ -1,4 +1,5 @@
 const Album = require('../database/models').Album;
+const Song = require('../database/models').Song;
 
 module.exports = {
   createAlbum: async(req, res) => {
@@ -41,7 +42,10 @@ module.exports = {
   getAlbum: async(req, res) => {
     try {
       const { id } = req.params;
-      const album = await Genre.findOne({ where: { id }});
+      const album = await Album.findOne({ where: { id }, include: [{
+        model: Song,
+        as: 'songs',
+      }]});
       if (!album) return res.status(404).json({
         error: 'Album not found!'
       });

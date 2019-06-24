@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Genre.associate = function(models) {
     // associations can be defined here
+    Genre.hasMany(models.Album, {
+      foreignKey: 'genreId',
+      as: 'albums',
+    });
   };
   return Genre;
 };

@@ -1,4 +1,5 @@
 const Artist = require('../database/models').Artist;
+const Album = require('../database/models').Album;
 
 module.exports = {
   createArtist: async(req, res) => {
@@ -20,7 +21,12 @@ module.exports = {
   getArtist: async (req, res) => {
     try {
       const { id } = req.params;
-      const artist = await Artist.findOne({ where: { id }});
+      const artist = await Artist.findOne({ where: { id }, 
+        include : [{
+          model: Album,
+          as: 'albums',
+        }]
+      });
       if (!artist) return res.status(404).json({
         error: 'Artist not found!'
       });

@@ -1,4 +1,5 @@
 const Genre = require('../database/models').Genre;
+const Album = require('../database/models').Album;
 
 module.exports = {
   createGenre: async(req, res) => {
@@ -43,7 +44,11 @@ module.exports = {
   getGenre: async (req, res) => {
     try {
       const { id } = req.params;
-      const genre = await Genre.findOne({ where: { id }});
+      const genre = await Genre.findOne({ where: { id }, include: [{
+          model: Album,
+          as: 'albums',
+        }]
+      });
       if (!genre) return res.status(404).json({
         error: 'Genre not found!'
       });
@@ -52,6 +57,7 @@ module.exports = {
         genre
       });
     } catch (error) {
+      console.log(error)
       return res.status(500).json({
         error: 'An error occured when trying to retrieved the genre!'
       });
