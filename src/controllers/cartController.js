@@ -21,8 +21,8 @@ module.exports = {
   },
   getAllCartItems: async(req, res) => {
     try {
-      const cartItems = await Cart.findAll();
-      if (cartItems.length < 1) {
+      const cart = await Cart.findAll();
+      if (cart.length < 1) {
         return res.status(200).json({
           message: 'There are no cart items currently'
         });
