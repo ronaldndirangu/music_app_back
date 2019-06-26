@@ -3,11 +3,15 @@ const http = require('http');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const cors = require('cors');
+const fs = require('fs');
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(morgan('common', {
+  stream: fs.createWriteStream('./access.log', {flags: 'a'})
+}));
 app.use(morgan('dev'));
 app.use(cors());
 
